@@ -13,9 +13,12 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
 
-    QString locale = QLocale::system().name().split("_").at(0);
-    QTranslator translator;
-    translator.load("NoTer_"+locale);
+  QTranslator translator;
+  bool loaded = translator.load(QLocale::system(), ":/Noter", "_");
+  if (!loaded) {
+    // Fallback to English
+    translator.load(":/Noter_en");
+  }
     QGuiApplication app(argc, argv);
     app.installTranslator(&translator);
     QFileInfo fi(app.applicationDirPath() + "/../share/icons/hicolor/256x256/apps/NoTer.png");
