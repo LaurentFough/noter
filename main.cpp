@@ -13,11 +13,17 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
 
+//   QTranslator translator;
+//   bool loaded = translator.load(QLocale::system(), ":/Noter", "_");
+//   if (!loaded) {
+//     // Fallback to English
+//     translator.load(":/Noter_en");
+//   }
+  QString locale = QLocale::system().name().split("_").at(0);
   QTranslator translator;
-  bool loaded = translator.load(QLocale::system(), ":/Noter", "_");
+  bool loaded = translator.load(":/Noter_" + locale);
   if (!loaded) {
-    // Fallback to English
-    translator.load(":/Noter_en");
+    translator.load(":/Noter_en");    
   }
     QGuiApplication app(argc, argv);
     app.installTranslator(&translator);
